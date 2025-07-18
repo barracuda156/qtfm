@@ -364,7 +364,9 @@ QWidget* SettingsDialog::createMimeSettings() {
   // tree filter
   QLineEdit *mimeSearch = new QLineEdit(grpMimes);
   mimeSearch->setPlaceholderText(tr("Filter ..."));
+#if QT_VERSION >= 0x050000
   mimeSearch->setClearButtonEnabled(true);
+#endif
   connect(mimeSearch, SIGNAL(textChanged(QString)), this, SLOT(filterMimes(QString)));
   layoutMimes->addWidget(mimeSearch);
 
