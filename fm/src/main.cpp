@@ -39,6 +39,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 
+#if QT_VERSION >= 0x050000
 void msgHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
@@ -65,6 +66,29 @@ void msgHandler(QtMsgType type, const QMessageLogContext &context, const QString
         abort();
     }
 }
+#else
+void msgHandler(QtMsgType type, const char *msg)
+{
+    QByteArray localMsg = QByteArray(msg);
+    if (localMsg.contains("link outline hasn't been detected!") ||
+        localMsg.contains("iCCP: known incorrect sRGB profile") ||
+        localMsg.contains("XDG_RUNTIME_DIR")) { return; }
+    switch (type) {
+    case QtDebugMsg:
+        fprintf(stderr, "Debug: %s\n", localMsg.constData());
+        break;
+    case QtWarningMsg:
+        fprintf(stderr, "Warning: %s\n", localMsg.constData());
+        break;
+    case QtCriticalMsg:
+        fprintf(stderr, "Critical: %s\n", localMsg.constData());
+        break;
+    case QtFatalMsg:
+        fprintf(stderr, "Fatal: %s\n", localMsg.constData());
+        abort();
+    }
+}
+#endif
 
 /**
  * @brief main function
@@ -74,8 +98,11 @@ void msgHandler(QtMsgType type, const QMessageLogContext &context, const QString
  */
 
 int main(int argc, char *argv[]) {
-
+#if QT_VERSION >= 0x050000
   qInstallMessageHandler(msgHandler);
+#else
+  qInstallMsgHandler(msgHandler);
+#endif
 
 #ifdef WITH_MAGICK
   Magick::InitializeMagick(Q_NULLPTR);
