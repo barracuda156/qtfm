@@ -1646,7 +1646,11 @@ bool MainWindow::eventFilter(QObject *o, QEvent *e)
     if (e->type() == QEvent::MouseButtonPress) {
         QMouseEvent* me = static_cast<QMouseEvent*>(e);
         switch (me->button()) {
+#if QT_VERSION >= 0x050000
         case Qt::BackButton:
+#else
+        case Qt::XButton1:
+#endif
             goBackDir();
             break;
         default:;
