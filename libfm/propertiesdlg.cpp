@@ -23,7 +23,11 @@
 #include <QGroupBox>
 #include <QPushButton>
 
+#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#else
+#include <QtConcurrentRun>
+#endif
 
 #include "common.h"
 #include "propertiesdlg.h"

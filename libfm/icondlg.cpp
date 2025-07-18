@@ -22,8 +22,9 @@
 
 #include "icondlg.h"
 #if QT_VERSION >= 0x050000
-  #include <QtConcurrent/QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #else
+#include <QtConcurrentRun>
 #endif
 
 #include "common.h"
