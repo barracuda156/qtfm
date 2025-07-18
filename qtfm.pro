@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 CONFIG -= ordered
 SUBDIRS += libfm fm
+INCLUDEPATH += $$PWD/libfm
+INCLUDEPATH += $$PWD/fm/src
 fm.depends += libfm
 
 CONFIG(v7) {
