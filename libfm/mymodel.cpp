@@ -25,6 +25,12 @@
 #include <sys/ioctl.h>
 #include <QApplication>
 #include <QMessageBox>
+#if QT_VERSION >= 0x050000
+#include <QFileDevice>
+#else
+#include <QFile>
+#define QFileDevice QFile
+#endif
 #include "fileutils.h"
 
 #ifdef WITH_MAGICK
