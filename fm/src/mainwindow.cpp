@@ -1156,7 +1156,11 @@ void MainWindow::pasteLauncher(const QList<QUrl> &files, const QString &newPath,
 
   // Copy/move files
   for (int i=0;i<files.size();++i) {
+#if QT_VERSION >= 0x050000
       QString queueFile = files.at(i).fileName();
+#else
+      QString queueFile = QFileInfo(files.at(i).toLocalFile()).fileName();
+#endif
       queueFile.prepend(QString("%1/").arg(newPath));
       if (!progressQueue.contains(queueFile)) {
           qDebug() << "add to queue" << queueFile;
