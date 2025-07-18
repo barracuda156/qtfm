@@ -43,6 +43,10 @@
 #define COPY_X_OF "Copy (%1) of %2"
 #define COPY_X_TS "yyyyMMddHHmmss"
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#define Q_NULLPTR NULL
+#endif
+
 class Common
 {
 public:
