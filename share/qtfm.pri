@@ -20,7 +20,11 @@ unix:!macx {
     isEmpty(XDGDIR): XDGDIR = /etc/xdg
 }
 
-QT += widgets
+CONFIG += qt gui
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+}
 
 CONFIG += link_pkgconfig
 
@@ -29,7 +33,6 @@ macx {
     LIBS += -framework CoreFoundation -framework CoreServices
     QT_CONFIG -= no-pkg-config
     PKGCONFIG += libinotify
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
     CONFIG += staticlib
 }
 
@@ -44,5 +47,3 @@ netbsd-g++: PKGCONFIG += libinotify
 
 #DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-lessThan(QT_MAJOR_VERSION, 5): error("Qt4 is not supported anymore.")

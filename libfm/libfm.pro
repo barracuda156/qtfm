@@ -1,6 +1,8 @@
-include($${top_srcdir}/share/qtfm.pri)
+include(../share/qtfm.pri)
 
-QT += widgets concurrent
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets concurrent
+}
 
 TARGET = QtFM
 VERSION = $${QTFM_MAJOR}.$${QTFM_MINOR}.$${QTFM_PATCH}
@@ -59,7 +61,7 @@ HEADERS += \
 #           qtcopydialog/qtotherdialog.ui
 
 unix:!macx {
-    DESTDIR = $${top_builddir}/lib$${LIBSUFFIX}
+    DESTDIR = ../lib$${LIBSUFFIX}
     OBJECTS_DIR = $${DESTDIR}/.obj_libfm
     MOC_DIR = $${DESTDIR}/.moc_libfm
     RCC_DIR = $${DESTDIR}/.qrc_libfm
@@ -79,10 +81,10 @@ unix:!macx {
     target.path = $${LIBDIR}
     docs.path = $${DOCDIR}/$${QTFM_TARGET}-$${VERSION}
     docs.files += \
-                $${top_srcdir}/LICENSE \
-                $${top_srcdir}/README.md \
-                $${top_srcdir}/AUTHORS \
-                $${top_srcdir}/ChangeLog
+                ../LICENSE \
+                ../README.md \
+                ../AUTHORS \
+                ../ChangeLog
 
     CONFIG(with_includes) {
         target_inc.path = $${PREFIX}/include/lib$${TARGET}
@@ -99,5 +101,5 @@ unix:!macx {
     CONFIG(with_includes): INSTALLS += target_inc
 }
 
-CONFIG(with_magick): include($${top_srcdir}/share/imagemagick.pri)
-CONFIG(with_ffmpeg): include($${top_srcdir}/share/ffmpeg.pri)
+CONFIG(with_magick): include(../share/imagemagick.pri)
+CONFIG(with_ffmpeg): include(../share/ffmpeg.pri)

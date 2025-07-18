@@ -1,13 +1,15 @@
-include($${top_srcdir}/share/qtfm.pri)
+include(../share/qtfm.pri)
 
-QT+= widgets concurrent
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets concurrent
+}
 
-TARGET = $${QTFM_TARGET}
-TARGET_NAME = $${QTFM_TARGET_NAME}
+TARGET = qtfm
+TARGET_NAME = "QtFM"
 VERSION = $${QTFM_MAJOR}.$${QTFM_MINOR}.$${QTFM_PATCH}
 TEMPLATE = app
 
-INCLUDEPATH += src $${top_srcdir}/libfm
+INCLUDEPATH += src ../libfm
 
 DEFINES += APP=\"\\\"$${TARGET}\\\"\"
 DEFINES += APP_NAME=\"\\\"$${TARGET_NAME}\\\"\"
@@ -27,22 +29,22 @@ SOURCES += \
     src/actiondefs.cpp \
     src/actiontriggers.cpp
 
-RESOURCES += $${top_srcdir}/share/$${TARGET}.qrc
+RESOURCES += ../share/$${TARGET}.qrc
 
 macx {
-    LIBS += -L$${top_builddir}/libfm -lQtFM
+    LIBS += -L../libfm -lQtFM -F$${PREFIX}/libexec/qt4/Library/Frameworks
     DEFINES += NO_DBUS NO_UDISKS
     RESOURCES += bundle/adwaita.qrc
-    ICON = $${top_srcdir}/share/images/QtFM.icns
-    QMAKE_INFO_PLIST = $${top_srcdir}/share/Info.plist
+    ICON = ../share/images/QtFM.icns
+    QMAKE_INFO_PLIST = ../share/Info.plist
 }
 
 unix:!macx {
-    DESTDIR = $${top_builddir}/bin
+    DESTDIR = ../bin
     OBJECTS_DIR = $${DESTDIR}/.obj_fm
     MOC_DIR = $${DESTDIR}/.moc_fm
     RCC_DIR = $${DESTDIR}/.qrc_fm
-    LIBS += -L$${top_builddir}/lib$${LIBSUFFIX} -lQtFM
+    LIBS += -L../lib$${LIBSUFFIX} -lQtFM
 
     target.path = $${PREFIX}/bin
     desktop.files += $${TARGET}.desktop
@@ -51,7 +53,7 @@ unix:!macx {
     man.path += $${MANDIR}/man1
     INSTALLS += target desktop man
 
-    hicolor.files = $${top_srcdir}/share/hicolor
+    hicolor.files = ../share/hicolor
     hicolor.path = $${PREFIX}/share/icons
     INSTALLS += hicolor
 
@@ -63,5 +65,5 @@ unix:!macx {
     !CONFIG(staticlib): QMAKE_RPATHDIR += $ORIGIN/../lib$${LIBSUFFIX}
 }
 
-CONFIG(with_magick): include($${top_srcdir}/share/imagemagick.pri)
-CONFIG(with_ffmpeg): include($${top_srcdir}/share/ffmpeg.pri)
+CONFIG(with_magick): include(../share/imagemagick.pri)
+CONFIG(with_ffmpeg): include(../share/ffmpeg.pri)
